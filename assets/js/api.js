@@ -2,10 +2,13 @@
  * Konfigurasi API Team Computer - ASP .NET
  * Base URL: https://api-teamcom.runasp.net/api
  */
-const API_BASE = '/api/proxy.php?path=';
+
+// Ganti base URL ke API eksternal langsung
+const API_BASE = 'https://teamcom-api.somee.com/api/';
 
 function apiUrl(path) {
-    return `${API_BASE}${encodeURIComponent(path)}`;
+    // Pastikan tidak ada double slash
+    return API_BASE.replace(/\/$/, '') + '/' + path.replace(/^\//, '');
 }
 
 const API_ENDPOINTS = {
