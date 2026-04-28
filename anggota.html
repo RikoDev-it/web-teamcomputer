@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Anggota - Team Computer</title>
+    <link rel="icon" href="logo_tc.png" type="image/png"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: { brand: { 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-zoom { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-zoom:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .skeleton-line, .skeleton-circle { background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; animation: skeleton-pulse 1.5s ease-in-out infinite; }
+        @keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    </style>
+</head>
+<body class="font-sans text-gray-600 bg-gray-50 min-h-screen flex flex-col">
+
+    <!-- Simple Navbar Back -->
+    <nav class="bg-white shadow-sm p-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center">
+                
+                <span class="font-bold text-gray-900">Kembali ke Beranda</span>
+            </a>
+            <a href="index.html#tim" class="text-sm text-gray-500 hover:text-brand-600">&larr; Kembali ke Tim</a>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Anggota Angkatan <span id="angkatan" class="text-brand-600"></span></h1>
+            <p class="text-gray-500 mt-2">Daftar lengkap anggota angkatan <span id="angkatan1"></span></p>
+        </div>
+
+        <div id="members-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards injected via JS -->
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 py-6">
+        <div class="text-center text-sm text-gray-500">&copy; 2026 Team Computer SMKN 1 LIWA</div>
+    </footer>
+
+    <!-- MODAL ANGGOTA -->
+    <div id="modal-member" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" onclick="closeModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+            
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-brand-600 px-4 py-3 flex justify-between items-center">
+                    <h3 class="text-lg font-medium text-white" id="m-name">Nama</h3>
+                    <button onclick="closeModal()" class="text-white hover:text-gray-200">&times;</button>
+                </div>
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="text-center">
+                        <!-- Foto Klik Zoom -->
+                        <img id="m-photo" src="" class="h-32 w-32 rounded-full mx-auto object-cover border-4 border-white shadow-md cursor-pointer hover:opacity-90" onclick="openLightbox(this.src)">
+                        <h4 class="mt-3 text-xl font-bold text-gray-900" id="m-full-name">-</h4>
+                        <p class="text-brand-600 font-medium" id="m-role">-</p>
+                        
+                        <div class="mt-4 text-left bg-gray-50 rounded p-4 text-sm space-y-2">
+                            <p><span class="font-semibold text-gray-500">Angkatan:</span> <span id="m-batch">-</span></p>
+                            <p><span class="font-semibold text-gray-500">Jurusan:</span> <span id="m-major">-</span></p>
+                            <p><span class="font-semibold text-gray-500">Tanggal Lahir:</span> <span id="m-dob">-</span></p>
+                            <p><span class="font-semibold text-gray-500">Email:</span> <span id="m-email">-</span></p>
+                            <p><span class="font-semibold text-gray-500">Alamat:</span> <span id="m-address" class="italic">-</span></p>
+                                                
+                            <div id="m-social-container" class="flex items-center gap-3 pt-1">
+                                <span class="font-semibold text-gray-500">Social Media:</span>
+                                <div class="flex items-center gap-3">
+                                    <a id="m-instagram-link" href="#" target="_blank" class="text-gray-400 hover:text-pink-600 transition-colors hidden">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849s.012-3.584.07-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                        </svg>
+                                    </a>
+                                    <a id="m-tiktok-link" href="#" target="_blank" class="text-gray-400 hover:text-black transition-colors hidden">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.33-.85.51-1.44 1.43-1.58 2.41-.14 1.14.33 2.34 1.27 3.04.88.66 2.05.8 3.09.35 1.03-.41 1.75-1.39 1.93-2.48.11-1.04.02-2.1.02-3.14-.01-4.24-.01-8.49-.02-12.73z"/>
+                                        </svg>
+                                    </a>
+                                    <span id="m-social-empty" class="text-gray-400 italic hidden">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="fixed inset-0 z-[60] hidden bg-black bg-opacity-95 flex items-center justify-center p-4" onclick="closeLightbox()">
+        <img id="lightbox-img" class="max-w-full max-h-[90vh] object-contain">
+    </div>
+
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/anggota.js"></script>
+</body>
+</html>

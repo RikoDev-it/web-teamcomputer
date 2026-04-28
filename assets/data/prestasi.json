@@ -1,0 +1,39 @@
+[
+  {
+    "id_prestasi": "P01",
+    "nama_pemenang": "Tim Web Dev",
+    "bidang_lomba": "Lomba Web Design",
+    "jurusan_timkom": "Laman Desain Web",
+    "lokasi_lomba": "Jakarta",
+    "angkatan": "2022",
+    "tahun_perlombaan": "2024",
+    "peringkat_perlombaan": 1,
+    "tingkat_perlombaan": "LKS SMK Provinsi Lampung",
+    "foto_pemenangurl": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80"
+  },
+  {
+    "id_prestasi": "P02",
+    "nama_pemenang": "Ahmad Santoso",
+    "bidang_lomba": "Network Challenge",
+    "jurusan_timkom": "NSA",
+    "lokasi_lomba": "Bandar Lampung",
+    "angkatan": "2023",
+    "tahun_perlombaan": "2024",
+    "peringkat_perlombaan": 1,
+    "tingkat_perlombaan": "LKS SMK Provinsi Lampung",
+    "foto_pemenangurl": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80"
+  },
+  {
+    "id_prestasi": "P03",
+    "nama_pemenang": "Budi Pratama",
+    "bidang_lomba": "UI/UX Design",
+    "jurusan_timkom": "Laman Desain Web",
+    "lokasi_lomba": "Semarang",
+    "angkatan": "2022",
+    "tahun_perlombaan": "2023",
+    "peringkat_perlombaan": 1,
+    "tingkat_perlombaan": "LKS SMK Provinsi Lampung",
+    "foto_pemenangurl": "https://images.unsplash.com/photo-1586717791821-3f44a5638d48?auto=format&fit=crop&q=80"
+  }
+]
+

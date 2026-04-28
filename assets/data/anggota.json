@@ -1,0 +1,58 @@
+[
+  {
+    "id_anggota": "TC001",
+    "nama": "Ahmad Santoso",
+    "angkatan": "18",
+    "jurusan": "Network System Administrator",
+    "tanggal_lahir": "12 Januari 2006",
+    "alamat": "Jl. Merdeka No. 1",
+    "email": "ahmad@smkn1liwa.sch.id",
+    "foto_url": "https://randomuser.me/api/portraits/men/32.jpg",
+    "jabatan": "Ketua Umum"
+  },
+  {
+    "id_anggota": "TC002",
+    "nama": "Siti Aisyah",
+    "angkatan": "17",
+    "jurusan": "Desainer",
+    "tanggal_lahir": "05 Maret 2006",
+    "alamat": "Jl. Pendidikan No. 10",
+    "email": "siti@smkn1liwa.sch.id",
+    "foto_url": "https://randomuser.me/api/portraits/women/44.jpg",
+    "jabatan": "Sekretaris"
+  },
+  {
+    "id_anggota": "TC003",
+    "nama": "Budi Pratama",
+    "angkatan": "17",
+    "jurusan": "Laman Desain Web",
+    "tanggal_lahir": "20 Agustus 2005",
+    "alamat": "Balik Bukit",
+    "email": "budi@smkn1liwa.sch.id",
+    "foto_url": "https://randomuser.me/api/portraits/men/85.jpg",
+    "jabatan": "Kadiv Web"
+  },
+  {
+    "id_anggota": "TC004",
+    "nama": "Dewi Sartika",
+    "angkatan": "16",
+    "jurusan": "Multimedia",
+    "tanggal_lahir": "15 November 2005",
+    "alamat": "Pekon Bahagia",
+    "email": "dewi@smkn1liwa.sch.id",
+    "foto_url": "https://randomuser.me/api/portraits/women/65.jpg",
+    "jabatan": "Staff Video"
+  },
+  {
+    "id_anggota": "TC005",
+    "nama": "Eko Prasetyo",
+    "angkatan": "15",
+    "jurusan": "Network System Administrator",
+    "tanggal_lahir": "02 Februari 2004",
+    "alamat": "Liwa Tengah",
+    "email": "eko@smkn1liwa.sch.id",
+    "foto_url": "https://randomuser.me/api/portraits/men/11.jpg",
+    "jabatan": "Alumni"
+  }
+]
+

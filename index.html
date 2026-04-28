@@ -1,0 +1,536 @@
+<!--
+PEMBUAT         :Rico Iqbal Jeryan & Ridho Fitrawan
+NO TELEPHONE    :Rico(0851-8705-0859) & RIdho(0815-3872-1336)
+JURUSAN         :Technical Support
+ANGKATAN TIMKOM :17
+JABATAN TIMKOM  :Rico(Anggota) & Ridho(Ketua)
+
+WEB INI MENGGUKAN BACKEND YANG DIMANA ADA APLIKASI MOBILE SEBAGAI ADMIN
+
+FRONTEND WEB = HTML, CSS TAILWIND, JS
+BACKEND = C# ASP .NET (net8.0)
+APLIKASI MOBILE = C# .NET MAUI (net8.0)
+-->
+
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Computer SMKN 1 LIWA</title>
+    <link rel="icon" href="logo_tc.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: { 
+                        // Warna disesuaikan dengan Logo (Hijau Menara, Merah Bintang, Biru Teks)
+                        'lb-blue': '#3b82f6', 
+                        'lb-green': '#22c55e',
+                        'lb-red': '#ef4444',
+                        'brand': { 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' } 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .nav-active { background-color: #3b82f6; color: white; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5); }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .skeleton-line, .skeleton-circle { background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; animation: skeleton-pulse 1.5s ease-in-out infinite; }
+        @keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    </style>
+</head>
+<body class="font-sans text-gray-600 bg-gray-50 antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 top-0 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img src="logo_tc.png" class="h-10 mr-3">
+                    <div>
+                        <span class="font-bold text-lg text-gray-900 block leading-none">Team Computer</span>
+                        <span class="text-[10px] text-gray-500 font-medium tracking-wider">SMKN 1 LIWA</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-1 items-center">
+                    <a href="#beranda" id="nav-beranda" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Beranda</a>
+                    <a href="#tentang" id="nav-tentang" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Tentang</a>
+                    <a href="#visi-misi" id="nav-visi-misi" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Visi Misi</a>
+                    <a href="#tim" id="nav-tim" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Tim</a>
+                    <a href="#prestasi" id="nav-prestasi" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Prestasi</a>
+                    <a href="#galery" id="nav-galery" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Galery</a>
+                    <a href="#kontak" id="nav-kontak" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-lb-blue hover:bg-gray-50 transition-all">Kontak</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-20">
+        <!-- 1. BERANDA -->
+        <section id="beranda" class="bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+                <div class="flex flex-col lg:flex-row items-stretch gap-12">
+                    <div class="lg:w-1/2">
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900">
+                        Selamat Datang di <span class="text-lb-blue">Team Computer</span>
+                    </h1>
+                    <p class="mt-4 text-xl text-gray-500">
+                        Ekstrakurikuler  teknologi dan komputer <strong>SMKN 1 LIWA</strong> yang membentuk generasi muda yang siap menghadapi era digital dengan skill dan kreativitas terdepan.
+                    </p>
+                    <div class="mt-8 flex gap-4">
+                        <a href="#tim" class="px-6 py-3 bg-lb-blue text-white rounded-lg font-medium hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">Lihat Tim</a>
+                        <a href="#prestasi" class="px-6 py-3 bg-blue-100 text-lb-blue rounded-lg font-medium hover:bg-blue-200 transition">Prestasi</a>
+                    </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full h-[320px] sm:h-[340px] lg:h-[360px]">
+                        <img
+                          src="/assets/image/beranda_image.jpeg" alt="Hero" class="w-full h-full object-cover rounded-2xl shadow-xl"
+                        />
+                    </div>
+                </div>
+
+                <!-- STATS (Seperti gambar) - posisi di bawah teks & gambar, center -->
+                <div class="mt-14 flex justify-center">
+                    <div class="w-full max-w-5xl">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                            <div class="text-center">
+                                <div class="mx-auto h-14 w-14 rounded-full bg-blue-50 grid place-items-center text-lb-blue">
+                                    <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div id="stat-anggota" class="mt-3 text-3xl font-extrabold text-gray-900">0</div>
+                                <div class="text-gray-500 mt-1 text-sm">Anggota Aktif</div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="mx-auto h-14 w-14 rounded-full bg-blue-50 grid place-items-center text-lb-blue">
+                                    <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                    </svg>
+                                </div>
+                                <div id="stat-prestasi" class="mt-3 text-3xl font-extrabold text-gray-900">0</div>
+                                <div class="text-gray-500 mt-1 text-sm">Prestasi</div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="mx-auto h-14 w-14 rounded-full bg-blue-50 grid place-items-center text-lb-blue">
+                                    <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                                <div id="stat-jurusan" class="mt-3 text-3xl font-extrabold text-gray-900">4</div>
+                                <div class="text-gray-500 mt-1 text-sm">Jurusan</div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="mx-auto h-14 w-14 rounded-full bg-blue-50 grid place-items-center text-lb-blue">
+                                    <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+                                    </svg>
+                                </div>
+                                <div id="stat-proyek" class="mt-3 text-3xl font-extrabold text-gray-900">2+</div>
+                                <div class="text-gray-500 mt-1 text-sm">Proyek</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. TENTANG -->
+        <section id="tentang" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-900">Tentang Kami</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-500">Team Computer berdiri pada 09 September 2009, dengan pendiri Bpk Didik Kurniawan S.Kom.,M.T.I. Tujuan didirikannya ekskul Team Computer yaitu untuk mempersiapkan para siswa dan siswi mengikuti perlombaan jaringan dan informatika.
+                </p>
+                <h4 class="text-3x1 font-bold text-gray-900 py-5s">
+                    Berikut beberapa jurusan di Team Computer:
+                </h4>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div data-bidang="nsa" role="button" tabindex="0" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition hover-lift cursor-pointer focus:outline-none focus:ring-2 focus:ring-lb-blue/40">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 mb-4 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-blue-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3V3.75a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v7.5a3 3 0 0 1-3 3m-13.5 0a3 3 0 0 0-3 3v3.75a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3V17.25a3 3 0 0 0-3-3M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Zm0 9a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                          </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Technical Support</h3>
+                        <p class="text-sm text-gray-500 mt-2"><span class="font-bold">Network & System Administrator. </span>Mengelola server dan keamanan jaringan.</p>
+                    </div>
+                    <div data-bidang="ldw" role="button" tabindex="0" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition hover-lift cursor-pointer focus:outline-none focus:ring-2 focus:ring-lb-blue/40">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-100 mb-4 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-emerald-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                          </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Web Design</h3>
+                        <p class="text-sm text-gray-500 mt-2"><span class="font-bold">Laman Desain Web. </span>Pembuatan website modern dan responsif.</p>
+                    </div>
+                    <div data-bidang="designer" role="button" tabindex="0" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition hover-lift cursor-pointer focus:outline-none focus:ring-2 focus:ring-lb-blue/40">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-purple-100 mb-4 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122l9.53-9.53a2.122 2.122 0 00-3-3l-9.53 9.53a3.374 3.374 0 00-.929 1.498L5.25 18.75l4.282-.856a3.374 3.374 0 001.498-.928z" />
+                          </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Desain Grafis</h3>
+                        <p class="text-sm text-gray-500 mt-2"><span class="font-bold">Desainer. </span>Membuat identitas visual dan branding.</p>
+                    </div>
+                    <div data-bidang="multimedia" role="button" tabindex="0" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition hover-lift cursor-pointer focus:outline-none focus:ring-2 focus:ring-lb-blue/40">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-100 mb-4 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-amber-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+                          </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Multimedia</h3>
+                        <p class="text-sm text-gray-500 mt-2"><span class="font-bold">Multimedia. </span>Video editing dan animasi digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. VISI & MISI (SESUAI GAMBAR & WARNA) -->
+        <section id="visi-misi" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Header Section -->
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Visi & Misi</h2>
+                    <p class="mt-2 text-gray-500">Komitmen kami dalam memajukan teknologi sekolah SMKN 1 LIWA.</p>
+                </div>
+
+                <!-- 4 Column Grid Layout (Like the screenshot) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    
+                    <!-- 1. VISI (Warna Biru Teks - LB Blue) -->
+                    <div class="bg-white rounded-2xl p-8 border-t-4 border-lb-blue shadow-sm hover-lift relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                            <svg class="w-24 h-24 text-lb-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                        <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 text-lb-blue">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Visi</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            Mewujudkan generasi digital yang berakhlak mulia, berprestasi dalam teknologi, dan kompeten menjawab tantangan industri global.
+                        </p>
+                    </div>
+
+                    <!-- 2. MISI (Warna Hijau Menara - LB Green) -->
+                    <div class="bg-white rounded-2xl p-8 border-t-4 border-lb-green shadow-sm hover-lift relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                            <svg class="w-24 h-24 text-lb-green" fill="currentColor" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"></path></svg>
+                        </div>
+                        <div class="w-14 h-14 bg-green-50 rounded-lg flex items-center justify-center mb-6 text-lb-green">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Misi</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            1.Menanamkan nilai-nilai religius dan etika profesi dalam setiap pemanfaatan teknologi informasi.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            2.Mengasah keahlian siswa di bidang Web Desain, Network, Desainer, dan Multimedia melalui praktik nyata dan inovasi kreatif
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            3.Aktif berpartisipasi dalam kompetisi teknologi serta membangun sinergi antar anggota untuk menghasilkan solusi digital yang bermanfaat
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TIM -->
+        <section id="tim" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900">Tim Kami</h2>
+                    <p class="text-gray-500 mt-2">Pilih angkatan untuk melihat daftar anggota berdasarkan angkatan.</p>
+                </div>
+
+                <!-- Pembina (klik => popup detail) -->
+                <div id="card-pembina" role="button" tabindex="0" class="max-w-2xl mx-auto mb-16 bg-white p-5 rounded-2xl flex flex-col sm:flex-row items-center gap-6 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/40 group">
+                                
+                    <div class="relative">
+                        <img id="pembina-avatar" 
+                             src="https://ui-avatars.com/api/?name=Didik+Kurniawan&background=0D8ABC&color=fff&size=128" 
+                             class="h-28 w-28 rounded-full border-4 border-white shadow-sm transition-transform duration-300 group-hover:scale-105" 
+                             alt="Pembina">
+                        <span class="absolute bottom-1 right-1 block h-5 w-5 rounded-full bg-green-500 border-2 border-white"></span>
+                    </div>
+                
+                    <div class="text-center sm:text-left">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                            <h3 id="pembina-name" class="text-xl font-extrabold text-gray-900 tracking-tight">
+                                DIDIK KURNIAWAN, S.Kom, M.T.I
+                            </h3>
+                        </div>
+                        
+                        <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 mb-2">
+                            Pembina & Pendiri
+                        </div>
+                        
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Membimbing siswa <span class="font-semibold text-gray-800">SMKN 1 Liwa</span> meraih prestasi teknologi tingkat nasional.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Grid Angkatan -->
+                <div id="angkatan-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Di isi oleh java script -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PRESTASI -->
+        <section id="prestasi" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Prestasi</h2>
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">Pilih Tahun:</h3>
+                    <p class="text-sm text-gray-500 mt-1">Klik tahun untuk membuka halaman daftar prestasi.</p>
+                </div>
+                <div id="years-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"></div>
+            </div>
+        </section>
+
+        <!-- 6. GALERY -->
+        <section id="galery" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-10">Galeri Kegiatan</h2>
+                <div id="galery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <img class="w-full h-40 sm:h-44 md:h-48 rounded-lg shadow-sm object-cover object-center transform hover:scale-105 transition duration-300 cursor-pointer" src="dokumentasi/dokumentasi1.jpeg" alt="Dokumentasi 1">
+                    <img class="w-full h-40 sm:h-44 md:h-48 rounded-lg shadow-sm object-cover object-center transform hover:scale-105 transition duration-300 cursor-pointer" src="dokumentasi/dokumentasi2.jpeg" alt="Dokumentasi 2">
+                    <img class="w-full h-40 sm:h-44 md:h-48 rounded-lg shadow-sm object-cover object-center transform hover:scale-105 transition duration-300 cursor-pointer" src="dokumentasi/dokumentasi3.jpeg" alt="Dokumentasi 3">
+                    <img class="w-full h-40 sm:h-44 md:h-48 rounded-lg shadow-sm object-cover object-center transform hover:scale-105 transition duration-300 cursor-pointer" src="dokumentasi/dokumentasi4.jpeg" alt="Dokumentasi 4">
+                </div>
+                <a href="dokumentasi.html" class="inline-block px-6 py-3 bg-lb-blue text-white rounded-lg font-medium hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">Lihat Full Dokumentasi &rarr;</a>
+            </div>
+        </section>
+
+        <!-- LIGHTBOX GALERY -->
+        <div id="galery-lightbox" class="fixed inset-0 z-[60] hidden bg-black bg-opacity-95 flex items-center justify-center p-4">
+            <img id="galery-lightbox-img" class="max-w-full max-h-[90vh] object-contain">
+        </div>
+
+        <!-- MODAL PEMBINA -->
+        <div id="modal-pembina" class="fixed inset-0 z-50 hidden overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" id="pb-backdrop"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-lb-blue px-4 py-3 flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-white" id="pb-name-header">Nama Pembina</h3>
+                        <button id="pb-close" class="text-white hover:text-gray-200">&times;</button>
+                    </div>
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="text-center">
+                            <!-- Foto Klik Zoom -->
+                            <img id="pb-photo" src="" class="h-32 w-32 rounded-full mx-auto object-cover border-4 border-white shadow-md cursor-pointer hover:opacity-90">
+                            <h4 class="mt-3 text-xl font-bold text-gray-900" id="pb-full-name">-</h4>
+                            <p class="text-lb-blue font-medium" id="pb-role">-</p>
+                            
+                            <div class="mt-4 text-left bg-gray-50 rounded p-4 text-sm space-y-2">
+                                <p><span class="font-semibold text-gray-500">Unit / Instansi:</span> <span id="pb-unit">-</span></p>
+                                <p><span class="font-semibold text-gray-500">Pendidikan Terakhir:</span> <span id="pb-edu">-</span></p>
+                                <p><span class="font-semibold text-gray-500">Peran di Team Computer:</span> <span id="pb-peran" class="italic">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIGHTBOX PEMBINA -->
+        <div id="pembina-lightbox" class="fixed inset-0 z-[60] hidden bg-black bg-opacity-95 flex items-center justify-center p-4">
+            <img id="pembina-lightbox-img" class="max-w-full max-h-[90vh] object-contain">
+        </div>
+
+        <!-- 7. FOOTER / KONTAK -->
+        <section id="kontak" class="bg-slate-950 text-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="grid gap-12 lg:grid-cols-4">
+                    <!-- Brand -->
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <img src="logo_tc.png" class="h-10 w-10" alt="Logo Team Computer">
+                            <div class="leading-tight">
+                                <p class="text-xl font-extrabold text-white">Team Computer</p>
+                                <p class="text-sm text-slate-400">SMK Negeri 1 Liwa</p>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-slate-400 leading-relaxed">
+                            Ekstrakurikuler teknologi terdepan yang membentuk generasi muda siap menghadapi era digital dengan skill dan kreativitas terdepan.
+                        </p>
+                        <div class="mt-6 flex gap-3">
+                            <a href="https://instagram.com/teamcomputer_" target="_blank" rel="noopener noreferrer" class="h-11 w-11 rounded-xl grid place-items-center bg-white/5 hover:bg-white/10 border border-white/10 transition" aria-label="Instagram">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M7.5 2h9A5.5 5.5 0 0122 7.5v9A5.5 5.5 0 0116.5 22h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm0 2A3.5 3.5 0 004 7.5v9A3.5 3.5 0 007.5 20h9a3.5 3.5 0 003.5-3.5v-9A3.5 3.5 0 0016.5 4h-9z"/>
+                                    <path d="M12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/>
+                                    <path d="M17.5 6.2a.9.9 0 110 1.8.9.9 0 010-1.8z"/>
+                                </svg>
+                            </a>
+                            <a href="https://youtube.com/@teamcomputerofficial8262?si=eS-03pS4qxumDtfE" target="_blank" rel="noopener noreferrer" class="h-11 w-11 rounded-xl grid place-items-center bg-white/5 hover:bg-white/10 border border-white/10 transition" aria-label="YouTube">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zM10 15.5v-7l6 3.5-6 3.5z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Menu Utama -->
+                    <div>
+                        <p class="text-white font-bold text-lg">Menu Utama</p>
+                        <div class="mt-5 space-y-3 text-slate-400">
+                            <a href="#beranda" class="block hover:text-white transition">Beranda</a>
+                            <a href="#tentang" class="block hover:text-white transition">Tentang</a>
+                            <a href="#visi-misi" class="block hover:text-white transition">Visi Misi</a>
+                            <a href="#tim" class="block hover:text-white transition">Tim</a>
+                            <a href="#prestasi" class="block hover:text-white transition">Prestasi</a>
+                            <a href="#galery" class="block hover:text-white transition">Galery</a>
+                        </div>
+                    </div>
+
+                    <!-- Program Kami -->
+                    <div>
+                        <p class="text-white font-bold text-lg">Program Kami</p>
+                        <div class="mt-5 space-y-3 text-slate-400">
+                            <p>Web Desain</p>
+                            <p>Network & System Administrator</p>
+                            <p>Desairner</p>
+                            <p>Multimedia</p>
+                        </div>
+                    </div>
+
+                    <!-- Kontak Kami -->
+                    <div>
+                        <p class="text-white font-bold text-lg">Kontak Kami</p>
+                        <div class="mt-5 space-y-4 text-slate-400">
+                            <div class="flex items-start gap-3">
+                                <svg class="h-5 w-5 text-sky-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 10.5c0 7-7.5 11.5-7.5 11.5S4.5 17.5 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                </svg>
+                                <div>
+                                    <p class="text-slate-200">SMK Negeri 1 Liwa</p>
+                                    <p>Lampung Barat, Indonesia</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="h-5 w-5 text-sky-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h2.28a2 2 0 011.94 1.515l.7 2.8a2 2 0 01-.45 1.83l-1.27 1.27a16 16 0 007.07 7.07l1.27-1.27a2 2 0 011.83-.45l2.8.7A2 2 0 0121 18.72V21a2 2 0 01-2 2h-1C9.163 23 1 14.837 1 4V3a2 2 0 012-2z" />
+                                </svg>
+                                <p>Hubungi sekolah untuk informasi lebih lanjut</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="h-5 w-5 text-sky-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 10h18a2 2 0 002-2V6a2 2 0 00-2-2H3a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <p>Informasi melalui sekolah</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="h-5 w-5 text-sky-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22a10 10 0 100-20 10 10 0 000 20z" />
+                                </svg>
+                                <p>Jam sekolah reguler</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom bar -->
+                <div class="mt-14 border-t border-white/10 pt-8">
+                    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                        <div class="text-sm text-slate-400">
+                            <p>&copy; 2026 Team Computer SMK Negeri 1 Liwa. All rights reserved.</p>
+                            <p class="mt-2">
+                                Dibuat dengan <span class="text-red-400">&hearts;</span> oleh
+                                <span class="text-slate-200 font-semibold">Team Computer</span>;
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-x-8 gap-y-2 text-sm">
+                            <a href="#" class="text-slate-400 hover:text-white transition">Privacy Policy</a>
+                            <a href="#" class="text-slate-400 hover:text-white transition">Terms of Service</a>
+                            <a href="#" class="text-slate-400 hover:text-white transition">Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL BIDANG (NSA / LDW / DESIGNER / MULTIMEDIA) -->
+    <div id="modal-bidang" class="fixed inset-0 z-[70] hidden flex items-center justify-center bg-black/70 p-4" aria-hidden="true">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-7 relative shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="bidang-title">
+            <button id="bidang-close" class="absolute top-3 right-3 h-10 w-10 rounded-xl grid place-items-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition" aria-label="Tutup">
+                <span class="text-2xl leading-none">&times;</span>
+            </button>
+
+            <div class="flex items-start gap-4">
+                <div id="bidang-badge" class="shrink-0 px-3 py-2 rounded-xl bg-blue-50 text-lb-blue font-bold text-sm">
+                    INFO
+                </div>
+                <div class="min-w-0">
+                    <h3 id="bidang-title" class="text-xl font-extrabold text-gray-900"></h3>
+                    <p id="bidang-desc" class="mt-2 text-gray-600"></p>
+                </div>
+            </div>
+
+            <div class="mt-5 bg-gray-50 border border-gray-100 rounded-xl p-4">
+                <p class="text-sm font-bold text-gray-800 mb-2">Yang dipelajari / dikerjakan</p>
+                <ul id="bidang-points" class="list-disc pl-5 text-sm text-gray-600 space-y-1"></ul>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button id="bidang-close-2" class="px-5 py-2.5 bg-lb-blue text-white rounded-lg font-medium hover:bg-blue-600 transition shadow-lg shadow-blue-500/20">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script>
+        (function initGaleryLightbox() {
+            var grid = document.getElementById('galery-grid');
+            var lightbox = document.getElementById('galery-lightbox');
+            var lightboxImg = document.getElementById('galery-lightbox-img');
+            if (!grid || !lightbox || !lightboxImg) return;
+
+            function openLightbox(src, alt) {
+                if (!src) return;
+                lightboxImg.src = src;
+                lightboxImg.alt = alt || 'Dokumentasi';
+                lightbox.classList.remove('hidden');
+            }
+
+            function closeLightbox() {
+                lightbox.classList.add('hidden');
+            }
+
+            grid.addEventListener('click', function (e) {
+                var target = e.target;
+                if (target && target.tagName === 'IMG') {
+                    openLightbox(target.src, target.alt);
+                }
+            });
+
+            lightbox.addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                    closeLightbox();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

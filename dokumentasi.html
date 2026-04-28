@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi Kegiatan - Team Computer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo_tc.png" type="image/png"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: { brand: { 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-gray-600 bg-gray-50 min-h-screen flex flex-col">
+
+    <!-- Navbar Back -->
+    <nav class="bg-white shadow-sm p-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center">
+                
+                <span class="font-bold text-gray-900">Kembali ke Beranda</span>
+            </a>
+            <a href="index.html#galery" class="text-sm text-gray-500 hover:text-brand-600">&larr; Kembali ke Galery</a>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <h1 class="text-3xl font-bold text-gray-900 mb-3 text-center">Dokumentasi Kegiatan Team Computer</h1>
+        <p class="text-center text-gray-500 mb-10 text-sm">
+            Pilih tahun dokumentasi terlebih dahulu, lalu lihat galeri lengkap berdasarkan tahun yang dipilih.
+        </p>
+
+        <!-- VIEW 1: PILIH TAHUN -->
+        <section id="view-years">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Pilih Tahun Dokumentasi</h2>
+            <p class="text-sm text-gray-500 mb-6">
+                Klik salah satu kartu tahun di bawah untuk membuka dokumentasi lengkap tahun tersebut.
+            </p>
+
+            <div id="year-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Diisi via JavaScript -->
+            </div>
+        </section>
+
+        <!-- VIEW 2: GALERI PER TAHUN -->
+        <section id="view-gallery" class="hidden">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <button id="btn-back-years" class="inline-flex items-center text-sm text-gray-600 hover:text-brand-600">
+                        <span class="mr-1">&larr;</span> Kembali ke daftar tahun
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-3">
+                        Dokumentasi Tahun <span id="gallery-year"></span>
+                    </h2>
+                    <p id="gallery-desc" class="text-sm text-gray-500 mt-1">
+                        Galeri foto kegiatan Team Computer pada tahun yang dipilih.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Masonry-like layout -->
+            <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Diisi via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-6 mt-auto">
+        <div class="text-center text-sm text-gray-500">&copy; 2023 Team Computer SMKN 1 LIWA</div>
+    </footer>
+
+    <!-- LIGHTBOX DOKUMENTASI -->
+    <div id="doc-lightbox" class="fixed inset-0 z-[60] hidden bg-black bg-opacity-95 flex items-center justify-center p-4">
+        <img id="doc-lightbox-img" class="max-w-full max-h-[90vh] object-contain">
+    </div>
+    
+    <script>
+        // Elemen DOM
+        var yearCardsEl = document.getElementById('year-cards');
+        var viewYearsEl = document.getElementById('view-years');
+        var viewGalleryEl = document.getElementById('view-gallery');
+        var galleryContainerEl = document.getElementById('gallery-container');
+        var galleryYearEl = document.getElementById('gallery-year');
+        var btnBackYears = document.getElementById('btn-back-years');
+
+        // Data yang di-load dari JSON akan disimpan di sini:
+        // { "2025": { gambar: [url1, ...], deskripsi: [caption1, ...] }, ... }
+        var dokumentasiData = {};
+
+        // Render kartu per tahun
+        function renderYearCards() {
+            var years = Object.keys(dokumentasiData).sort(function(a, b) {
+                return b.localeCompare(a); // descending
+            });
+
+            yearCardsEl.innerHTML = '';
+
+            years.forEach(function(year) {
+                var entry = dokumentasiData[year] || {};
+                var images = entry.gambar || [];
+                var captions = Array.isArray(entry.deskripsi) ? entry.deskripsi : [];
+                var latestImage = images.length > 0
+                    ? images[images.length - 1]
+                    : 'https://via.placeholder.com/800x600?text=Tidak+ada+gambar';
+
+                var card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'bg-white rounded-2xl shadow-sm hover:shadow-md overflow-hidden text-left group border border-gray-100';
+
+                card.addEventListener('click', function() {
+                    openGalleryForYear(year);
+                });
+
+                var html = '';
+                html += '<div class="relative h-40 w-full overflow-hidden">';
+                html +=   '<img src="' + latestImage + '" alt="Thumbnail ' + year + '" class="h-full w-full object-cover transform group-hover:scale-105 transition duration-300">';
+                html +=   '<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80"></div>';
+                html +=   '<div class="absolute bottom-3 left-4 text-white">';
+                html +=     '<p class="text-xs font-medium uppercase tracking-wide text-white/80">Dokumentasi</p>';
+                html +=     '<p class="text-2xl font-extrabold leading-tight">' + year + '</p>';
+                html +=   '</div>';
+                html += '</div>';
+                html += '<div class="p-4">';
+                html +=   '<p class="text-sm text-gray-700 font-semibold mb-1">Dokumentasi Tahun ' + year + '</p>';
+                html +=   '<p class="text-xs text-gray-500 mb-3">' + images.length + ' foto kegiatan terekam pada tahun ini.</p>';
+                html +=   '<span class="inline-flex items-center text-xs font-medium text-brand-600 group-hover:text-brand-700">';
+                html +=     'Lihat dokumentasi lengkap';
+                html +=     '<svg class="h-3.5 w-3.5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">';
+                html +=       '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />';
+                html +=     '</svg>';
+                html +=   '</span>';
+                html += '</div>';
+
+                card.innerHTML = html;
+                yearCardsEl.appendChild(card);
+            });
+        }
+
+        // Buka galeri untuk tahun tertentu
+        function openGalleryForYear(year) {
+            var entry = dokumentasiData[year] || {};
+            var images = entry.gambar || [];
+            var captions = Array.isArray(entry.deskripsi) ? entry.deskripsi : [];
+
+            galleryYearEl.textContent = year;
+            galleryContainerEl.innerHTML = '';
+            var descEl = document.getElementById('gallery-desc');
+            if (descEl) {
+                descEl.textContent = 'Galeri foto kegiatan Team Computer pada tahun yang dipilih.';
+            }
+
+            images.forEach(function(src, index) {
+                var wrap = document.createElement('figure');
+                wrap.className = 'w-full';
+
+                var img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Dokumentasi ' + year + ' - Foto ' + (index + 1);
+                img.className = 'w-full h-56 sm:h-64 rounded-lg shadow-sm object-cover object-[50%_55%] hover:scale-[1.02] transition duration-300 mb-2 cursor-pointer';
+                img.addEventListener('click', function () {
+                    openDocLightbox(img.src, img.alt);
+                });
+                wrap.appendChild(img);
+
+                var captionText = captions[index] || '';
+                if (captionText) {
+                    var cap = document.createElement('figcaption');
+                    cap.className = 'text-xs text-gray-500 mb-4';
+                    cap.textContent = captionText;
+                    wrap.appendChild(cap);
+                } else {
+                    wrap.className += ' mb-4';
+                }
+
+                galleryContainerEl.appendChild(wrap);
+            });
+
+            // Tampilkan / sembunyikan view
+            viewYearsEl.classList.add('hidden');
+            viewGalleryEl.classList.remove('hidden');
+        }
+
+        function openDocLightbox(src, alt) {
+            if (!src) return;
+            docLightboxImg.src = src;
+            docLightboxImg.alt = alt || 'Dokumentasi';
+            docLightbox.classList.remove('hidden');
+        }
+
+        function closeDocLightbox() {
+            docLightbox.classList.add('hidden');
+        }
+
+        var docLightbox = document.getElementById('doc-lightbox');
+        var docLightboxImg = document.getElementById('doc-lightbox-img');
+        if (docLightbox) {
+            docLightbox.addEventListener('click', closeDocLightbox);
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !docLightbox.classList.contains('hidden')) {
+                    closeDocLightbox();
+                }
+            });
+        }
+
+        // Tombol kembali ke daftar tahun
+        if (btnBackYears) {
+            btnBackYears.addEventListener('click', function() {
+                viewGalleryEl.classList.add('hidden');
+                viewYearsEl.classList.remove('hidden');
+            });
+        }
+
+        // Load data dari JSON lalu render
+        function loadDokumentasi() {
+            fetch('assets/data/dokumentasi.json')
+                .then(function(res) { return res.json(); })
+                .then(function(list) {
+                    dokumentasiData = {};
+                    list.forEach(function(item) {
+                        if (!item.tahun || !Array.isArray(item.gambar)) {
+                            return;
+                        }
+                    dokumentasiData[item.tahun] = {
+                        gambar: item.gambar,
+                        deskripsi: Array.isArray(item.deskripsi) ? item.deskripsi : []
+                    };
+                    });
+                    renderYearCards();
+                })
+                .catch(function(err) {
+                    console.error('Gagal memuat dokumentasi.json', err);
+                    yearCardsEl.innerHTML = '<p class="text-sm text-red-500">Gagal memuat data dokumentasi.</p>';
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDokumentasi);
+    </script>
+</body>
+</html>
