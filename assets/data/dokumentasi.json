@@ -2,10 +2,27 @@
   {
     "tahun": "2025",
     "gambar": [
-      "https://i.ibb.co.com/27RTn1bT/Whats-App-Image-2026-04-29-at-09-57-10.jpg"
+      "https://immpmzelaxtceuohhcqt.supabase.co/storage/v1/object/public/foto-anggota/WhatsApp%20Image%202026-04-29%20at%2009.57.10.jpeg",
+      "https://i.ibb.co.com/5WnFDkPF/Whats-App-Image-2026-04-29-at-10-03-59.jpg",
+      "https://i.ibb.co.com/PZVZw8d2/Whats-App-Image-2026-04-29-at-09-57-19.jpg",
+      "https://i.ibb.co.com/8D7nL05g/Whats-App-Image-2026-04-29-at-09-57-22.jpg"
     ],
     "deskripsi": [
-      "Foto bersama pertemuan perdana Team Computer Angkatan 18"
+      "Foto bersama pertemuan perdana Team Computer Angkatan 18",
+      "Foto bergaya from angkatan 16 & 17, dengan Alumi Team Computer",
+      "Pembelajaran pembuatan web sederhana dengan html dan css jurusan Web Design",
+      "Perempuan angakatan 18 Team Computer sebelum makan bersama dengan pembina Team Computer di genza"
+    ]
+  },
+  {
+    "tahun": "2026",
+    "gambar": [
+            "https://i.ibb.co.com/Jjb91TjZ/Whats-App-Image-2026-04-29-at-09-57-13.jpg",
+      "https://i.ibb.co.com/MyVgJwbp/Whats-App-Image-2026-04-29-at-09-57-14.jpg"
+    ],
+    "deskripsi": [
+      "Hari Guru Nasional 2025, Team Computer memberikan kejutan ke pada pembina Team Computer",
+      "Perundingan perancangan Web Team Computer bersama pembina Team Computer"
     ]
   }
 ]
