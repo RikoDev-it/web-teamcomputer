@@ -351,8 +351,10 @@ function initScrollSpy() {
         });
         document.querySelectorAll('nav a').forEach((a) => {
             a.classList.remove('nav-active');
+            a.classList.add('text-gray-600');
             if (a.getAttribute('href') && a.getAttribute('href').includes(current)) {
                 a.classList.add('nav-active');
+                a.classList.remove('text-gray-600');
             }
         });
     });
