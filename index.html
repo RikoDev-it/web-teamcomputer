@@ -254,15 +254,15 @@ APLIKASI MOBILE = C# .NET MAUI (net8.0)
 
                 <!-- Pembina (klik => popup detail) -->
                 <div id="card-pembina" role="button" tabindex="0" class="max-w-2xl mx-auto mb-16 bg-white p-5 rounded-2xl flex flex-col sm:flex-row items-center gap-6 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/40 group">
-                                
                     <div class="relative">
-                        <img id="pembina-avatar" 
-                             src="assets/image/pembina.png" 
-                             class="h-28 w-28 rounded-full border-4 border-white shadow-sm transition-transform duration-300 group-hover:scale-105" 
-                             alt="Pembina">
+                        <div class="h-28 w-28 rounded-full overflow-hidden border-4 border-gray-100 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                            <img id="pembina-avatar"
+                                src="assets/image/pembina.webp"
+                                alt="Pembina"
+                                class="w-full h-full object-cover object-center">
+                            </div>
                         <span class="absolute bottom-1 right-1 block h-5 w-5 rounded-full bg-green-500 border-2 border-white"></span>
                     </div>
-                
                     <div class="text-center sm:text-left">
                         <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
                             <h3 id="pembina-name" class="text-xl font-extrabold text-gray-900 tracking-tight">
