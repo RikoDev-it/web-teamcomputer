@@ -117,7 +117,7 @@ function getAnimObserver() {
                 // Toggle animation state so elements animate every time they enter/leave viewport
                 entry.target.classList.toggle('animate-visible', entry.isIntersecting);
             });
-        }, { rootMargin: '0px', threshold: 0.15 });
+        }, { rootMargin: '120px', threshold: 0.01 });
     }
     return window.__tcAnimObserver;
 }
@@ -153,8 +153,10 @@ function initScrollAnimations() {
 
 function initStaggerAnimations(parentSelector, childSelector, animation = 'fade-up', maxDelay = 10) {
     const parents = document.querySelectorAll(parentSelector);
+    // :scope is required when a child selector starts with the direct-child combinator (>)
+    const normalizedSelector = childSelector.trim().startsWith('>') ? ':scope ' + childSelector : childSelector;
     parents.forEach((parent) => {
-        const children = parent.querySelectorAll(childSelector);
+        const children = parent.querySelectorAll(normalizedSelector);
         children.forEach((child, index) => {
             child.setAttribute('data-animate', animation);
             const delay = Math.min(index + 1, maxDelay);
