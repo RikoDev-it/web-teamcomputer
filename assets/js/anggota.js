@@ -105,8 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ---- Render member card ---- */
-    function createMemberCard(m) {
+    function createMemberCard(m, delay = 0) {
         const div = document.createElement('div');
+        div.setAttribute('data-animate', 'fade-up');
+        if (delay) div.setAttribute('data-animate-delay', delay);
         div.className = 'bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center card-zoom cursor-pointer';
         div.onclick = () => openModal(m);
         const foto = (m.foto_url || '').trim() ||
@@ -121,12 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function appendLazyCards(members) {
-        members.forEach((m) => {
+        members.forEach((m, index) => {
             const slot = document.createElement('div');
             slot.className = 'lazy-slot';
             slot.innerHTML = SKELETON.memberCard();
             grid.appendChild(slot);
-            createLazyCard(slot, m, (item) => createMemberCard(item));
+            const delay = Math.min(index + 1, 8);
+            createLazyCard(slot, m, (item) => createMemberCard(item, delay));
         });
     }
 
@@ -206,6 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollThrottle = null;
         });
     }, { passive: true });
+
+    // Scroll animations (safe for dynamic infinite-scroll cards)
+    initScrollAnimations();
 
     loadPage(currentPage, false);
 });

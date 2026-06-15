@@ -84,8 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ---- Create prestasi card ---- */
-    function createPrestasiCard(p) {
+    function createPrestasiCard(p, delay = 0) {
         const card = document.createElement('div');
+        card.setAttribute('data-animate', 'fade-up');
+        if (delay) card.setAttribute('data-animate-delay', delay);
         card.className =
             'bg-white rounded-2xl shadow-sm border border-gray-100 p-5 card-zoom cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-600/30';
         card.setAttribute('role', 'button');
@@ -123,6 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showSkeleton(6);
 
+    // Scroll animations (safe for lazy-loaded cards)
+    initScrollAnimations();
+
     /* ---- Load data ---- */
     const url = API_ENDPOINTS.prestasiTimkom(tahun);
     fetch(url)
@@ -142,12 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             grid.innerHTML = '';
-            filtered.forEach((p) => {
+            filtered.forEach((p, index) => {
                 const slot = document.createElement('div');
                 slot.className = 'lazy-slot';
                 slot.innerHTML = SKELETON.prestasiCard();
                 grid.appendChild(slot);
-                createLazyCard(slot, p, (item) => createPrestasiCard(item));
+                const delay = Math.min(index + 1, 8);
+                createLazyCard(slot, p, (item) => createPrestasiCard(item, delay));
             });
         })
         .catch(() => {

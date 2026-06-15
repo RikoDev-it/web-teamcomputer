@@ -95,10 +95,73 @@ function createLazyCard(slot, item, renderCard, options = {}) {
             el.classList.remove('lazy-slot');
             if (typeof rendered === 'string') el.innerHTML = rendered;
             else if (rendered && rendered.nodeType) el.appendChild(rendered);
+
+            // Trigger scroll animation on the rendered real card if it has one
+            const animTarget = (rendered && rendered.nodeType) ? rendered : el.firstElementChild;
+            if (animTarget && animTarget.hasAttribute && animTarget.hasAttribute('data-animate')) {
+                observeAnimatedElement(animTarget);
+            }
+
             observer.unobserve(el);
         });
     }, opts);
     observer.observe(slot);
+}
+
+/* ---- Scroll animations (safe with infinite scroll, replay on every scroll) ---- */
+function getAnimObserver() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+    if (!window.__tcAnimObserver) {
+        window.__tcAnimObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                // Toggle animation state so elements animate every time they enter/leave viewport
+                entry.target.classList.toggle('animate-visible', entry.isIntersecting);
+            });
+        }, { rootMargin: '0px', threshold: 0.15 });
+    }
+    return window.__tcAnimObserver;
+}
+
+function observeAnimatedElement(el) {
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.classList.add('animate-visible');
+        return;
+    }
+    const observer = getAnimObserver();
+    if (!observer) return;
+    if (!window.__tcObservedEls) window.__tcObservedEls = new WeakSet();
+    if (window.__tcObservedEls.has(el)) return;
+    window.__tcObservedEls.add(el);
+    observer.observe(el);
+}
+
+function initScrollAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('[data-animate]').forEach((el) => el.classList.add('animate-visible'));
+        return;
+    }
+    const observer = getAnimObserver();
+    if (!observer) return;
+    if (!window.__tcObservedEls) window.__tcObservedEls = new WeakSet();
+    document.querySelectorAll('[data-animate]').forEach((el) => {
+        if (window.__tcObservedEls.has(el)) return;
+        window.__tcObservedEls.add(el);
+        observer.observe(el);
+    });
+}
+
+function initStaggerAnimations(parentSelector, childSelector, animation = 'fade-up', maxDelay = 10) {
+    const parents = document.querySelectorAll(parentSelector);
+    parents.forEach((parent) => {
+        const children = parent.querySelectorAll(childSelector);
+        children.forEach((child, index) => {
+            child.setAttribute('data-animate', animation);
+            const delay = Math.min(index + 1, maxDelay);
+            child.setAttribute('data-animate-delay', delay);
+            observeAnimatedElement(child);
+        });
+    });
 }
 
 async function apiGet(url) {

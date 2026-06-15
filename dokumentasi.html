@@ -17,6 +17,41 @@
             }
         }
     </script>
+    <style>
+        /* Scroll animations */
+        [data-animate] {
+            opacity: 0;
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            will-change: opacity, transform;
+        }
+        [data-animate].animate-visible {
+            opacity: 1;
+            transform: none !important;
+        }
+        [data-animate="fade-up"] { transform: translateY(20px); }
+        [data-animate="fade-down"] { transform: translateY(-20px); }
+        [data-animate="fade-left"] { transform: translateX(-20px); }
+        [data-animate="fade-right"] { transform: translateX(20px); }
+        [data-animate="scale-in"] { transform: scale(0.95); }
+        [data-animate="fade-in"] { transform: none; }
+        [data-animate-delay="1"] { transition-delay: 0.08s; }
+        [data-animate-delay="2"] { transition-delay: 0.16s; }
+        [data-animate-delay="3"] { transition-delay: 0.24s; }
+        [data-animate-delay="4"] { transition-delay: 0.32s; }
+        [data-animate-delay="5"] { transition-delay: 0.40s; }
+        [data-animate-delay="6"] { transition-delay: 0.48s; }
+        [data-animate-delay="7"] { transition-delay: 0.56s; }
+        [data-animate-delay="8"] { transition-delay: 0.64s; }
+        [data-animate-delay="9"] { transition-delay: 0.72s; }
+        [data-animate-delay="10"] { transition-delay: 0.80s; }
+        @media (prefers-reduced-motion: reduce) {
+            [data-animate] {
+                opacity: 1;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 <body class="font-sans text-gray-600 bg-gray-50 min-h-screen flex flex-col">
 
@@ -81,6 +116,7 @@
         <img id="doc-lightbox-img" class="max-w-full max-h-[90vh] object-contain">
     </div>
     
+    <script src="assets/js/api.js"></script>
     <script>
         // Elemen DOM
         var yearCardsEl = document.getElementById('year-cards');
@@ -102,7 +138,7 @@
 
             yearCardsEl.innerHTML = '';
 
-            years.forEach(function(year) {
+            years.forEach(function(year, index) {
                 var entry = dokumentasiData[year] || {};
                 var images = entry.gambar || [];
                 var captions = Array.isArray(entry.deskripsi) ? entry.deskripsi : [];
@@ -112,6 +148,9 @@
 
                 var card = document.createElement('button');
                 card.type = 'button';
+                card.setAttribute('data-animate', 'fade-up');
+                var delay = Math.min(index + 1, 8);
+                if (delay) card.setAttribute('data-animate-delay', delay);
                 card.className = 'bg-white rounded-2xl shadow-sm hover:shadow-md overflow-hidden text-left group border border-gray-100';
 
                 card.addEventListener('click', function() {
@@ -163,6 +202,9 @@
                 var img = document.createElement('img');
                 img.src = src;
                 img.alt = 'Dokumentasi ' + year + ' - Foto ' + (index + 1);
+                img.setAttribute('data-animate', 'scale-in');
+                var delay = Math.min(index + 1, 8);
+                if (delay) img.setAttribute('data-animate-delay', delay);
                 img.className = 'w-full h-56 sm:h-64 rounded-lg shadow-sm object-cover object-[50%_55%] hover:scale-[1.02] transition duration-300 mb-2 cursor-pointer';
                 img.addEventListener('click', function () {
                     openDocLightbox(img.src, img.alt);
@@ -185,6 +227,9 @@
             // Tampilkan / sembunyikan view
             viewYearsEl.classList.add('hidden');
             viewGalleryEl.classList.remove('hidden');
+
+            // Observe newly added gallery images for scroll animation
+            initScrollAnimations();
         }
 
         function openDocLightbox(src, alt) {
@@ -233,6 +278,9 @@
                     };
                     });
                     renderYearCards();
+                
+                    // Observe year cards and static elements for scroll animation
+                    initScrollAnimations();
                 })
                 .catch(function(err) {
                     console.error('Gagal memuat dokumentasi.json', err);

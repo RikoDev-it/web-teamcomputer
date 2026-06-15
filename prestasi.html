@@ -27,6 +27,39 @@
         .card-zoom:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .skeleton-line, .skeleton-circle { background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; animation: skeleton-pulse 1.5s ease-in-out infinite; }
         @keyframes skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        /* Scroll animations */
+        [data-animate] {
+            opacity: 0;
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            will-change: opacity, transform;
+        }
+        [data-animate].animate-visible {
+            opacity: 1;
+            transform: none !important;
+        }
+        [data-animate="fade-up"] { transform: translateY(20px); }
+        [data-animate="fade-down"] { transform: translateY(-20px); }
+        [data-animate="fade-left"] { transform: translateX(-20px); }
+        [data-animate="fade-right"] { transform: translateX(20px); }
+        [data-animate="scale-in"] { transform: scale(0.95); }
+        [data-animate="fade-in"] { transform: none; }
+        [data-animate-delay="1"] { transition-delay: 0.08s; }
+        [data-animate-delay="2"] { transition-delay: 0.16s; }
+        [data-animate-delay="3"] { transition-delay: 0.24s; }
+        [data-animate-delay="4"] { transition-delay: 0.32s; }
+        [data-animate-delay="5"] { transition-delay: 0.40s; }
+        [data-animate-delay="6"] { transition-delay: 0.48s; }
+        [data-animate-delay="7"] { transition-delay: 0.56s; }
+        [data-animate-delay="8"] { transition-delay: 0.64s; }
+        [data-animate-delay="9"] { transition-delay: 0.72s; }
+        [data-animate-delay="10"] { transition-delay: 0.80s; }
+        @media (prefers-reduced-motion: reduce) {
+            [data-animate] {
+                opacity: 1;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 <body class="font-sans text-gray-600 bg-gray-50 min-h-screen flex flex-col">

@@ -250,9 +250,11 @@ function renderStats(anggotaCount) {
     if (statPrestasi) statPrestasi.innerText = String(dataPrestasiTotal);
 }
 
-function createAngkatanCard(thn) {
+function createAngkatanCard(thn, count, delay = 0) {
     const card = document.createElement('a');
     card.href = `anggota.html?angkatan=${encodeURIComponent(thn)}`;
+    card.setAttribute('data-animate', 'fade-up');
+    if (delay) card.setAttribute('data-animate-delay', delay);
     card.className =
         'block bg-white hover:bg-lb-blue hover:text-white border border-gray-200 p-5 rounded-xl text-center transition transform hover:-translate-y-1 shadow-sm hover:shadow-md text-gray-700 hover:border-lb-blue group';
 
@@ -264,9 +266,11 @@ function createAngkatanCard(thn) {
     return card;
 }
 
-function createYearCard(y) {
+function createYearCard(y, delay = 0) {
     const card = document.createElement('a');
     card.href = `prestasi.html?tahun=${encodeURIComponent(y)}`;
+    card.setAttribute('data-animate', 'fade-up');
+    if (delay) card.setAttribute('data-animate-delay', delay);
     card.className =
         'block bg-gray-50 border border-gray-200 p-4 rounded-xl text-center cursor-pointer hover:bg-lb-blue hover:text-white hover:border-lb-blue transition font-bold text-gray-700';
     card.innerText = y;
@@ -309,12 +313,13 @@ function renderAngkatanGrid() {
             : { angkatan: String(x), count: null }
     );
     grid.innerHTML = '';
-    list.forEach(({ angkatan: thn, count }) => {
+    list.forEach(({ angkatan: thn, count }, index) => {
         const slot = document.createElement('div');
         slot.className = 'lazy-slot';
         slot.innerHTML = SKELETON.angkatanCard();
         grid.appendChild(slot);
-        createLazyCard(slot, { thn, count }, (item) => createAngkatanCard(item.thn, item.count));
+        const delay = Math.min(index + 1, 8);
+        createLazyCard(slot, { thn, count }, (item) => createAngkatanCard(item.thn, item.count, delay));
     });
 }
 
@@ -331,12 +336,13 @@ function renderPrestasiYears() {
         .filter((y) => y != null)
         .sort((a, b) => Number(b) - Number(a));
     yearGrid.innerHTML = '';
-    years.forEach((y) => {
+    years.forEach((y, index) => {
         const slot = document.createElement('div');
         slot.className = 'lazy-slot';
         slot.innerHTML = SKELETON.yearCard();
         yearGrid.appendChild(slot);
-        createLazyCard(slot, y, (item) => createYearCard(item));
+        const delay = Math.min(index + 1, 8);
+        createLazyCard(slot, y, (item) => createYearCard(item, delay));
     });
 }
 
@@ -386,6 +392,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bidangCtx) {
         initGlobalEscHandler(bidangCtx.modalBidang, bidangCtx.closeBidang);
     }
+
+    // Scroll animations (safe for static + dynamic content)
+    initScrollAnimations();
+    initStaggerAnimations('#stats-grid', '> div', 'fade-up', 4);
+    initStaggerAnimations('#bidang-grid', '> div', 'fade-up', 4);
+    initStaggerAnimations('#visi-misi-grid', '> div', 'fade-up', 2);
+    initStaggerAnimations('#galery-grid', 'img', 'scale-in', 4);
+    initStaggerAnimations('#kontak-grid', '> div', 'fade-up', 4);
 
     // Skeleton loading
     showAngkatanSkeleton();
